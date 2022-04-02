@@ -1,6 +1,6 @@
-body {
+* {
     margin: 0;
-    background-color: white;
+    padding: 0;
 }
 
 code {
@@ -18,21 +18,25 @@ textarea {
 }
 
 .main {
-    padding: 10px;
-}
-
-.search {
-    width: 100%;
-    font-size: 15px;
-    line-height: 15px;
+    height: 100vh;
 }
 
 .sidebar {
     background-color: #f0f0f0;
     height: 100vh;
-    padding: 20px;
 }
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.memu div {
+    margin-bottom: 0.5rem;
+}
+
+.flex-container {
+    height: 100vh;
+    display: flex; 
+    align-items: center;  
+    justify-content: center;
 }
