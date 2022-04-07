@@ -4,11 +4,12 @@ import django
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from . import util
 
 import random
-
+import markdown2
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -25,7 +26,7 @@ def content(request, entry):
         })
 
     return render(request, "encyclopedia/content.html", {
-        "content": content,
+        "content": mark_safe(markdown2.markdown(content)),
         "title": entry,
     })
 
