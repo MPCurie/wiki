@@ -23,7 +23,8 @@ def content(request, entry):
         })
 
     return render(request, "encyclopedia/content.html", {
-        "content" : content,
+        "content": content,
+        "title": entry,
     })
 
 
@@ -54,11 +55,21 @@ def create_page(request):
             return render(request, "encyclopedia/new_page.html", {
                 "error_message": "The file already exist",
             }) 
-        
 
     return render(request, "encyclopedia/new_page.html")
 
 
-    # 1、The title can't be empty
-    # 2、The file already exist
-    # 3、success message
+def edit_page(request, entry):
+    content = util.get_entry(entry)
+
+    if request.method == 'POST':
+        title = request.POST['title']
+
+        with open(f"entries/{title}.md", 'a') as f:
+            f.write(content)
+        return redirect(reverse('encyclopedia:entry', kwargs={'entry': title}))
+
+    return render(request, "encyclopedia/edit_page.html", {
+        "title": entry,
+        "content": content,
+    })
