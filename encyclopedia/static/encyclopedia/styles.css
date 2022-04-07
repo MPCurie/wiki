@@ -40,3 +40,12 @@ textarea {
     align-items: center;  
     justify-content: center;
 }
+
+ul a:link, a:visited {
+    color:cornflowerblue;
+    text-decoration: none;
+}
+
+ul a:hover {
+    text-decoration: underline;
+}
