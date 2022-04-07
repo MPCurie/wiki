@@ -13,11 +13,12 @@ def index(request):
         "entries": util.list_entries()
     })
 
+
 def content(request, entry):
     content = util.get_entry(entry)
 
     if not content:
-        return  render(request, "encyclopedia/apology.html", {
+        return render(request, "encyclopedia/apology.html", {
             "message": "Not_Found",
         })
 
@@ -25,8 +26,39 @@ def content(request, entry):
         "content" : content,
     })
 
+
 def search(request):
     entry = request.POST['entry']
     return redirect(reverse('encyclopedia:entry', kwargs={'entry': entry}))
+
     
-    
+def create_page(request):
+    titles = util.list_entries()
+
+    if request.method == 'POST':
+        title = request.POST['title']
+        content = request.POST['content']
+
+        if not title:
+            return render(request, "encyclopedia/new_page.html", {
+                "error_message": "The title can't be empty",
+            }) 
+
+        if title not in titles:
+            with open(f"entries/{title}.md", 'w+') as f:
+                f.write(content)
+            return render(request, "encyclopedia/new_page.html", {
+                "success_message": "Successful!",
+            }) 
+        else:
+            return render(request, "encyclopedia/new_page.html", {
+                "error_message": "The file already exist",
+            }) 
+        
+
+    return render(request, "encyclopedia/new_page.html")
+
+
+    # 1、The title can't be empty
+    # 2、The file already exist
+    # 3、success message
