@@ -7,6 +7,8 @@ from django.urls import reverse
 
 from . import util
 
+import random
+
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -73,3 +75,9 @@ def edit_page(request, entry):
         "title": entry,
         "content": content,
     })
+
+
+def random_page(request):
+    titles = util.list_entries()
+    random_title = random.choice(titles)
+    return redirect(reverse('encyclopedia:entry', kwargs={'entry': random_title}))
